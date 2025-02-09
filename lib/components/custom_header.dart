@@ -30,7 +30,7 @@ class _CustomHeaderState extends State<CustomHeader> {
             children: [
               TextButton(onPressed: () {
                 GoRouter.of(context).go(RouteName.home);
-              }, child: Text('Home', style: TextStyle(color: Colors.blue))),
+              }, child: Text('Home', style: TextStyle(color: Theme.of(context).primaryColor))),
               TextButton(onPressed: () {
 
               }, child: Text('Contact', style: TextStyle(color: Colors.black))),
@@ -44,14 +44,14 @@ class _CustomHeaderState extends State<CustomHeader> {
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: SizedBox(
               width: 300,
-              child: TextField(
-                style: Theme.of(context).textTheme.bodySmall,
-                decoration: InputDecoration(
-                  hintText: 'What are you looking for?',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
-                ),
-              ),
+              // child: TextField(
+              //   style: Theme.of(context).textTheme.bodySmall,
+              //   decoration: InputDecoration(
+              //     hintText: 'What are you looking for?',
+              //     prefixIcon: Icon(Icons.search),
+              //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
+              //   ),
+              // ),
             ),
           ),
 
@@ -61,12 +61,7 @@ class _CustomHeaderState extends State<CustomHeader> {
               if (authProvider.isAuthenticated) {
                 return Row(
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        // GoRouter.of(context).go(RouteName.wishlist);
-                      },
-                      icon: Icon(Icons.favorite),
-                    ),
+
                     IconButton(
                       onPressed: () {
                         GoRouter.of(context).go(RouteName.cartPage);
@@ -76,7 +71,7 @@ class _CustomHeaderState extends State<CustomHeader> {
                     ),
                     IconButton(
                       onPressed: () {
-                        // GoRouter.of(context).go(RouteName.profile);
+                        GoRouter.of(context).go(RouteName.profilePage);
                       },
                       icon: Icon(Icons.person),
                     ),
