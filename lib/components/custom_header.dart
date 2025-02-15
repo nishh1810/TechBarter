@@ -28,9 +28,15 @@ class _CustomHeaderState extends State<CustomHeader> {
 
           Row(
             children: [
-              TextButton(onPressed: () {}, child: Text('Home', style: TextStyle(color: Colors.blue))),
-              TextButton(onPressed: () {}, child: Text('Contact', style: TextStyle(color: Colors.black))),
-              TextButton(onPressed: () {}, child: Text('About', style: TextStyle(color: Colors.black))),
+              TextButton(onPressed: () {
+                GoRouter.of(context).go(RouteName.home);
+              }, child: Text('Home', style: TextStyle(color: Colors.blue))),
+              TextButton(onPressed: () {
+
+              }, child: Text('Contact', style: TextStyle(color: Colors.black))),
+              TextButton(onPressed: () {
+
+              }, child: Text('About', style: TextStyle(color: Colors.black))),
             ],
           ),
 
@@ -55,13 +61,31 @@ class _CustomHeaderState extends State<CustomHeader> {
               if (authProvider.isAuthenticated) {
                 return Row(
                   children: [
-                    Text("Hello! ${userProvider.user?.name ?? "UNKNOWN"}"),
-                    TextButton(
-                        onPressed: () {
-                          authProvider.logout();
-                          GoRouter.of(context).go(RouteName.login);
-                        },
-                        child: Text("LOGOUT")
+                    IconButton(
+                      onPressed: () {
+                        // GoRouter.of(context).go(RouteName.wishlist);
+                      },
+                      icon: Icon(Icons.favorite),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        GoRouter.of(context).go(RouteName.cartPage);
+                      },
+                      icon: Icon(Icons.shopping_cart,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        // GoRouter.of(context).go(RouteName.profile);
+                      },
+                      icon: Icon(Icons.person),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        authProvider.logout();
+                        GoRouter.of(context).go(RouteName.login);
+                      },
+                      icon: Icon(Icons.lock),
                     ),
                   ],
                 );

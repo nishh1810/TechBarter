@@ -20,7 +20,7 @@ class CartProduct {
     price = json['price'];
     cartQuantity = json['cartQuantity'];
     itemQuantity = json['itemQuantity'];
-    total = (price! * cartQuantity!) ?? 0.0;
+    total = (price! * cartQuantity!);
   }
 
   Map<String, dynamic> toJson() {
