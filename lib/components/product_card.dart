@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_barter/models/Product.dart';
-import 'package:tech_barter/providers/CartProvider.dart';
+import 'package:tech_barter/providers/cart_provider.dart';
 import 'package:tech_barter/providers/product_provider.dart';
 import 'package:tech_barter/providers/user_provider.dart';
 import 'package:tech_barter/utils/route_strings.dart';
@@ -31,7 +31,7 @@ class ProductCard extends StatelessWidget {
 
   _addToCartClick(context) {
     String userId = Provider.of<UserProvider>(context, listen: false).user!.id!;
-    Provider.of<CartProvider>(context, listen: false).addToCart(product, userId);
+    Provider.of<CartProvider>(context, listen: false).addToCart(product.id!, userId, 1);
   }
 
   String oldPrice = "0.0";

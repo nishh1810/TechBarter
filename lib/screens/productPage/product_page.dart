@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_barter/components/custom_scaffold.dart';
+import 'package:tech_barter/components/quantity_stepper.dart';
 import 'package:tech_barter/providers/product_provider.dart';
 import 'package:tech_barter/screens/productPage/components/related_products.dart';
 
@@ -14,6 +15,8 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+
+  int _currentQuantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -168,36 +171,51 @@ class _ProductPageState extends State<ProductPage> {
                         SizedBox(height: 16),
                         Row(
                           children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
-                                  ),
-                                  child: Center(child: Icon(Icons.exposure_minus_1, color: Colors.black, size: 20)),
-                                ),
-                                Container(
-                                    width: 60,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey),
-                                      borderRadius: BorderRadius.zero,
-                                    ),
-                                    child: Center(child: Text("1", style: TextStyle(color: Colors.black, fontSize: 20))),
-                                ),
-                                Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey),
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
-                                    ),
-                                    child: Center(child: Icon(Icons.plus_one, color: Colors.black, size: 20)),
-                                ),
-                              ],
+                            // Row(
+                            //   children: [
+                            //     Container(
+                            //       width: 40,
+                            //       height: 40,
+                            //       decoration: BoxDecoration(
+                            //         border: Border.all(color: Colors.grey),
+                            //         borderRadius: BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
+                            //       ),
+                            //       child: Center(child: Icon(Icons.remove, color: Colors.black, size: 20)),
+                            //     ),
+                            //     Container(
+                            //         width: 60,
+                            //         height: 40,
+                            //         decoration: BoxDecoration(
+                            //           border: Border.all(color: Colors.grey),
+                            //           borderRadius: BorderRadius.zero,
+                            //         ),
+                            //         child: Center(child: Text("1", style: TextStyle(color: Colors.black, fontSize: 20))),
+                            //     ),
+                            //     Container(
+                            //         width: 40,
+                            //         height: 40,
+                            //         decoration: BoxDecoration(
+                            //           border: Border.all(color: Colors.grey),
+                            //           borderRadius: BorderRadius.only(topRight: Radius.circular(4), bottomRight: Radius.circular(4)),
+                            //         ),
+                            //         child: Center(child: Icon(Icons.add, color: Colors.black, size: 20)),
+                            //     ),
+                            //   ],
+                            // ),
+                            Consumer<ProductProvider>(
+                                builder: (context, productProvider, child) {
+                                  return StatefulBuilder(
+                                    builder: (context, setState) {
+                                      return QuantityStepper(
+                                          quantity: _currentQuantity,
+                                          maxQuantity: productProvider.getSelectedProduct!.quantity!,
+                                          onQuantityChanged: (value)=> setState(() {
+                                            _currentQuantity = value;
+                                          })
+                                      );
+                                    }
+                                  );
+                                }
                             ),
                             SizedBox(width: 16),
                             ElevatedButton(

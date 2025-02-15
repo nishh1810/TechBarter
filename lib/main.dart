@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:tech_barter/providers/CartProvider.dart';
+import 'package:tech_barter/providers/cart_provider.dart';
 import 'package:tech_barter/providers/auth_provider.dart';
 import 'package:tech_barter/providers/product_provider.dart';
 import 'package:tech_barter/providers/user_provider.dart';
+import 'package:tech_barter/screens/cartPage/cart_page.dart';
 import 'package:tech_barter/screens/homePage/home.dart';
 import 'package:tech_barter/screens/login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         GoRoute(path: RouteName.signup, builder: (context, state) => SignUp()),
         GoRoute(path: RouteName.home, builder: (context, state) => Home()),
         GoRoute(path: RouteName.productPage, builder: (context, state) => ProductPage()),
+        GoRoute(path: RouteName.cartPage, builder: (context, state) => CartPage()),
       ],
       errorBuilder: (context, state) => NotFoundPage(),
   );

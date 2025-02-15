@@ -108,6 +108,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> logout() async {
     await SPHelper.removeData(SPHelper.KEY_TOKEN);
+    await SPHelper.removeData(SPHelper.KEY_SELECTED_PRODUCT);
     _token = null;
     notifyListeners();
   }

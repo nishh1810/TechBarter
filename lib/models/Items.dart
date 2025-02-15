@@ -15,4 +15,9 @@ class Items {
     data['quantity'] = quantity;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Items(productId: $productId, quantity: $quantity)';
+  }
 }

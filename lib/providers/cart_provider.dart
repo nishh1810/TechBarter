@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tech_barter/models/Items.dart';
 import 'package:tech_barter/models/Product.dart';
+import 'package:tech_barter/models/cart_product.dart';
 import 'package:tech_barter/providers/auth_provider.dart';
 import 'package:tech_barter/services/api_service.dart';
 import 'package:http/http.dart' as http;
@@ -13,10 +14,23 @@ class CartProvider extends ChangeNotifier {
   List<Items> _cartItems = [];
   List<Items> get cartItems => _cartItems;
 
-  List<Product> _products = [];
-  List<Product> get products => _products;
+  List<CartProduct> _cartProducts = [];
+  List<CartProduct> get cartProducts => _cartProducts;
 
-  Future<void> addToCart(Product product, String userId) async {
+  double _totalAmount = 0.0;
+  double get totalAmount {
+    _totalAmount = 0.0;
+    for (var cartProduct in _cartProducts) {
+      _totalAmount += cartProduct.total!;
+    }
+    return _totalAmount;
+  }
+
+  CartProvider() {
+    getCartItems();
+  }
+
+  Future<void> addToCart(String productId, String userId, int quantity) async {
     try {
       final url = '$apiUrl/cart';
 
@@ -28,13 +42,13 @@ class CartProvider extends ChangeNotifier {
         },
         body: jsonEncode({
           'userId': userId,
-          'productId': product.id,
-          'quantity': 1,
+          'productId': productId,
+          'quantity': quantity,
         }),
       );
 
-      if(response.statusCode == 200) {
-        _products.add(product);
+      if(response.statusCode == 201) {
+        await getCartItems();
         notifyListeners();
       }else {
         throw Exception("Failed to add to cart");
@@ -44,9 +58,9 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getCartItems(String userId) async {
+  Future<void> getCartItems() async {
     try {
-      final url = '$apiUrl/cart/$userId';
+      final url = '$apiUrl/cart';
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -56,9 +70,10 @@ class CartProvider extends ChangeNotifier {
       );
       if(response.statusCode == 200) {
         final data = json.decode(response.body);
-        _cartItems = (data as List<dynamic>)
-            .map((item) => Items.fromJson(item))
+        _cartProducts = (data as List<dynamic>)
+            .map((item) => CartProduct.fromJson(item))
             .toList();
+        totalAmount;
         notifyListeners();
       } else {
         throw Exception("Failed to load cart items");
