@@ -20,6 +20,11 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(Provider.of<ProductProvider>(context).getSelectedProduct == null) {
+      return CustomScaffold(body: Container());
+    }
+
     return CustomScaffold(
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 64, vertical: 32),
