@@ -9,6 +9,7 @@
 
 4- Add '--disable-web-security'
 
+
 ## Configuration in local flutter app
 1- open edit configurations
 2- Add --web-port="4002" in Additional run args
