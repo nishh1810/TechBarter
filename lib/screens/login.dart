@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_barter/components/custom_button.dart';
+import 'package:tech_barter/providers/user_provider.dart';
 import 'package:tech_barter/utils/route_strings.dart';
 
 import '../components/custom_header.dart';
@@ -25,6 +26,7 @@ class _LoginState extends State<Login> {
 
     try {
       await Provider.of<AuthProvider>(context, listen: false).login(usernameController.text, passwordController.text);
+      await Provider.of<UserProvider>(context, listen: false).fetchUserProfile();
       GoRouter.of(context).go(RouteName.home);
     } catch (e) {
       setState(() => _errorMessage = "Invalid Credentials");
@@ -33,7 +35,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
 
     return Scaffold(
       body: Column(

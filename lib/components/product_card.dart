@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:tech_barter/providers/CartProvider.dart';
 import 'package:tech_barter/providers/product_provider.dart';
 import 'package:tech_barter/providers/user_provider.dart';
 import 'package:tech_barter/utils/route_strings.dart';
+import 'package:tech_barter/utils/shared_preference_helper.dart';
 
 class ProductCard extends StatelessWidget {
   Product product;
@@ -19,6 +21,7 @@ class ProductCard extends StatelessWidget {
 
   _onCardClick(context) {
     Provider.of<ProductProvider>(context, listen: false).setSelectedProduct(product);
+    SPHelper.setData(SPHelper.KEY_SELECTED_PRODUCT, json.encode(product));
     GoRouter.of(context).go(RouteName.productPage);
   }
 

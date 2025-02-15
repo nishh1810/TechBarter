@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-import '../components/custom_app_bar.dart';
-import '../providers/auth_provider.dart';
-import '../utils/route_strings.dart';
+import 'package:tech_barter/components/custom_app_bar.dart';
+import 'package:tech_barter/providers/auth_provider.dart';
+import 'package:tech_barter/providers/user_provider.dart';
+import 'package:tech_barter/utils/route_strings.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -26,9 +26,10 @@ class _SignUpState extends State<SignUp> {
     setState(() => _errorMessage = null);
 
     try {
-      Provider.of<AuthProvider>(context, listen: false).signup(
+      await Provider.of<AuthProvider>(context, listen: false).signup(
           nameController.text, emailController.text,
           usernameController.text, passwordController.text);
+      await Provider.of<UserProvider>(context, listen: false).fetchUserProfile();
       GoRouter.of(context).go(RouteName.login);
     } catch(e) {
       setState(() => _errorMessage = "Something went wrong");

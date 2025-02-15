@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_barter/models/Product.dart';
 import 'package:tech_barter/services/api_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:tech_barter/utils/shared_preference_helper.dart';
 
 class ProductProvider extends ChangeNotifier {
   String apiUrl = ApiService.getApiUrl();
@@ -21,6 +22,17 @@ class ProductProvider extends ChangeNotifier {
   Product? get getSelectedProduct => _selectedProduct;
   void setSelectedProduct(Product product) => _selectedProduct = product;
 
+  ProductProvider() {
+    loadProductProvider();
+  }
+
+  void loadProductProvider() {
+    SPHelper.getData(SPHelper.KEY_SELECTED_PRODUCT).then((value) {
+      if(value != null) {
+        _selectedProduct = Product.fromJson(json.decode(value));
+      }
+    });
+  }
 
   Future<void> loadBestSellingProducts() async {
     try {
