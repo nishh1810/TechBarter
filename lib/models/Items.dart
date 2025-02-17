@@ -1,6 +1,9 @@
+import 'package:tech_barter/models/RefType.dart';
+
 class Items {
   String? productId;
   int? quantity;
+  RefType? image;
 
   Items({this.productId, this.quantity});
 
