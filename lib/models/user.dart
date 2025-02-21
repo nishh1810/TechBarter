@@ -1,3 +1,6 @@
+import 'package:tech_barter/models/RefType.dart';
+
+import 'address.dart';
 
 class User {
   String? id;
@@ -5,6 +8,8 @@ class User {
   String? email;
   String? username;
   List<Roles>? roles;
+  RefType? profileImage;
+  Address? address;
 
   User({this.id, this.name, this.email, this.username, this.roles});
 
@@ -18,6 +23,11 @@ class User {
         roles!.add(Roles.fromJson(v));
       });
     }
+    profileImage = json['profileImage'] != null
+        ? RefType.fromJson(json['profileImage'])
+        : null;
+    address =
+    json['address'] != null ? Address.fromJson(json['address']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +38,12 @@ class User {
     data['username'] = username;
     if (roles != null) {
       data['roles'] = roles!.map((v) => v.toJson()).toList();
+    }
+    if (profileImage != null) {
+      data['profileImage'] = profileImage!.toJson();
+    }
+    if (address != null) {
+      data['address'] = address!.toJson();
     }
     return data;
   }
