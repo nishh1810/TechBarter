@@ -13,11 +13,12 @@ class AuthProvider extends ChangeNotifier {
   String apiUrl = ApiService.getApiUrl();
 
   AuthProvider() {
-    _loadToken();
+    loadToken();
   }
 
-  Future<void> _loadToken() async {
+  Future<void> loadToken() async {
     _token = await SPHelper.getData(SPHelper.KEY_TOKEN);
+    print("loaded Token: $_token");
     if(token != null) {
       await validateToken().then((value) {
         if (!value) {
