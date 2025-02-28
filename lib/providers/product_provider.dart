@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tech_barter/models/Product.dart';
@@ -10,13 +11,16 @@ class ProductProvider extends ChangeNotifier {
   String apiUrl = ApiService.getApiUrl();
 
   List<Product> _bestSellingProducts = [];
-  List<Product> get getBestSellingProducts => _bestSellingProducts ?? [];
+  List<Product> get getBestSellingProducts => _bestSellingProducts;
 
   List<Product> _relatedProducts = [];
-  List<Product> get relatedProducts => _relatedProducts ?? [];
+  List<Product> get relatedProducts => _relatedProducts;
+
+  List<Product> _recyclableProduct = [];
+  List<Product> get recyclableProducts => _recyclableProduct;
 
   List<Product> _randomProducts = [];
-  List<Product> get randomProducts => _randomProducts ?? [];
+  List<Product> get randomProducts => _randomProducts;
 
   Product? _selectedProduct;
   Product? get getSelectedProduct => _selectedProduct;
@@ -107,6 +111,56 @@ class ProductProvider extends ChangeNotifier {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> getRecyclableProducts() async {
+    try {
+      final url = '$apiUrl/products/recyclable';
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if(response.statusCode == 200) {
+        final data = json.decode(response.body);
+        _recyclableProduct = (data as List<dynamic>)
+            .map((item) => Product.fromJson(item))
+            .toList();
+        notifyListeners();
+      } else {
+        throw Exception("Failed to load related products");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> loadProductImage(String? id) async {
+    try {
+      // throw Exception("Don't use firebase"); /// TODO: Comment this line to load real product Image
+      if(id == null || id.isEmpty) throw Exception("Invalid product id");
+      final url = '$apiUrl/image/$id';
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/String'
+        },
+      );
+
+      if(response.statusCode == 200) {
+        // print("loadProductImage: ${response.body}");
+        return response.body;
+      } else {
+        throw Exception("Failed to load related products");
+      }
+    } catch(e) {
+      print(e);
+      return "https://picsum.photos/id/${Random().nextInt(500)}/3000/2000";
     }
   }
 }
