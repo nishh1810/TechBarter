@@ -22,7 +22,10 @@ class _CartPageState extends State<CartPage> {
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 64, vertical: 32),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text("Cart", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
             CartTable(),
             const SizedBox(height: 20),
             CartSummary(),
