@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tech_barter/components/custom_button.dart';
 import 'package:tech_barter/components/product_card.dart';
 import 'package:tech_barter/providers/product_provider.dart';
 
@@ -15,7 +14,7 @@ class _RecyclableProductsState extends State<RecyclableProducts> {
 
   @override
   void initState() {
-    Provider.of<ProductProvider>(context, listen: false).loadBestSellingProducts();
+    Provider.of<ProductProvider>(context, listen: false).getRecyclableProducts();
     super.initState();
   }
 
@@ -45,23 +44,23 @@ class _RecyclableProductsState extends State<RecyclableProducts> {
                 'Recyclable Products',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              CustomBlueButton(
-                label: 'View All',
-                onPressed: () {},
-              ),
+              // CustomBlueButton(
+              //   label: 'View All',
+              //   onPressed: () {},
+              // ),
             ],
           ),
           SizedBox(height: 20),
           Consumer<ProductProvider>(
               builder: (context, productProvider, child) {
                 return SizedBox(
-                  height: 400,
+                  height: 300,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: productProvider.getBestSellingProducts.length,
+                    itemCount: productProvider.recyclableProducts.length,
                     itemBuilder: (context, index) {
                       return ProductCard(
-                        product: productProvider.getBestSellingProducts[index],
+                        product: productProvider.recyclableProducts[index],
                       );
                     },
                   ),

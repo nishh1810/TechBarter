@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tech_barter/components/custom_button.dart';
 import 'package:tech_barter/components/product_card.dart';
 import 'package:tech_barter/providers/product_provider.dart';
 
@@ -45,17 +44,17 @@ class _ExploreOurProductsState extends State<ExploreOurProducts> {
                 'Explore Our Products',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              CustomBlueButton(
-                label: 'View All',
-                onPressed: () {},
-              ),
+              // CustomBlueButton(
+              //   label: 'View All',
+              //   onPressed: () {},
+              // ),
             ],
           ),
           SizedBox(height: 20),
           Consumer<ProductProvider>(
               builder: (context, productProvider, child) {
                 return SizedBox(
-                  height: 400,
+                  height: 300,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: productProvider.randomProducts.length,
