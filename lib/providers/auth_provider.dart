@@ -18,7 +18,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> loadToken() async {
     _token = await SPHelper.getData(SPHelper.KEY_TOKEN);
-    print("loaded Token: $_token");
+    // print("loaded Token: $_token");
     if(token != null) {
       await validateToken().then((value) {
         if (!value) {
@@ -99,7 +99,6 @@ class AuthProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       _token = data['token'];
-
       await SPHelper.setData(SPHelper.KEY_TOKEN, _token);
       notifyListeners();
     } else {

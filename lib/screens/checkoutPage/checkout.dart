@@ -59,6 +59,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     _zipController.text = userProvider?.user?.address?.zipCode ?? "";
 
     return CustomScaffold(
+      curIndex: -1,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 64, vertical: 32),
         child: Column(

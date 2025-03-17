@@ -38,7 +38,7 @@ class OrderProvider with ChangeNotifier {
             .toList();
         notifyListeners();
       } else {
-        throw Exception("Failed to load related products");
+        throw Exception("Failed to load customer Orders");
       }
     } catch (e) {
       print(e);

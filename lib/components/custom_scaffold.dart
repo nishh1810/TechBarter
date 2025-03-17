@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:tech_barter/components/custom_header.dart';
 
 class CustomScaffold extends StatefulWidget {
+  final int curIndex;
   final Widget body;
-  const CustomScaffold({super.key, required this.body});
+  const CustomScaffold({super.key, required this.body, required this.curIndex});
 
   @override
   State<CustomScaffold> createState() => _CustomScaffoldState();
@@ -32,7 +33,7 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              CustomHeader(),
+              CustomHeader(curIndex: widget.curIndex),
               Expanded(
                   child: SingleChildScrollView(
                     child: widget.body,

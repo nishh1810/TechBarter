@@ -3,7 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// SharedPreferences Helper Class
 class SPHelper {
   static const KEY_TOKEN = "KEY_TOKEN";
+  static const KEY_PRODUCTS = "KEY_PRODUCTS";
   static const KEY_SELECTED_PRODUCT = "KEY_SELECTED_PRODUCT";
+  static const KEY_SELECTED_PRODUCT_REVIEWS = "KEY_SELECTED_PRODUCT_REVIEWS";
 
   static Future<void> setData(String key, dynamic value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

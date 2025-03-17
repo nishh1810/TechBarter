@@ -26,6 +26,7 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      curIndex: 5,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 64, vertical: 32),
         child: Row(

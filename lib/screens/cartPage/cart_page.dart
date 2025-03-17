@@ -19,6 +19,7 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     Provider.of<CartProvider>(context, listen: false).getCartItems();
     return CustomScaffold(
+      curIndex: 4,
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 64, vertical: 32),
         child: Column(

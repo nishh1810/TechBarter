@@ -15,6 +15,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      curIndex: 5,
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 64, vertical: 32),
         child: Column(

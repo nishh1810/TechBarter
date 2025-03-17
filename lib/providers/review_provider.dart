@@ -5,6 +5,7 @@ import 'package:tech_barter/models/review.dart';
 import 'package:http/http.dart' as http;
 import 'package:tech_barter/providers/auth_provider.dart';
 import 'package:tech_barter/services/api_service.dart';
+import 'package:tech_barter/utils/shared_preference_helper.dart';
 
 class ReviewProvider extends ChangeNotifier {
   String apiUrl = ApiService.getApiUrl();
@@ -14,6 +15,17 @@ class ReviewProvider extends ChangeNotifier {
 
   List<Review> _reviews = [];
   List<Review> get reviews => _reviews;
+
+  ReviewProvider() {
+    SPHelper.getData(SPHelper.KEY_SELECTED_PRODUCT_REVIEWS).then((value) {
+      if(value != null) {
+        final data = json.decode(value);
+        _reviews = (data as List<dynamic>)
+            .map((item) => Review.fromJson(item))
+            .toList();
+      }
+    });
+  }
 
   Future addReview({
     required String productId,
@@ -32,10 +44,16 @@ class ReviewProvider extends ChangeNotifier {
         uri,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${AuthProvider.token!}',
+          'Authorization': AuthProvider.token!,
         },
         body: body,
-      );
+      ).then((response) {
+        print("statuscode: ${response.statusCode}");
+        print("body: ${response.body}");
+        if(response.statusCode == 201) {
+          getReviews(productId);
+        }
+      });
     } catch (e) {
       print(e.toString());
     }
@@ -49,7 +67,7 @@ class ReviewProvider extends ChangeNotifier {
       final response = await http.get(
         uri,
         headers: {
-          'Authorization': 'Bearer ${AuthProvider.token!}',
+          'Authorization': AuthProvider.token!,
         },
       );
       if (response.statusCode == 200) {
@@ -57,6 +75,7 @@ class ReviewProvider extends ChangeNotifier {
         _reviews = (data as List<dynamic>)
             .map((item) => Review.fromJson(item))
             .toList();
+        SPHelper.setData(SPHelper.KEY_SELECTED_PRODUCT_REVIEWS, json.encode(_reviews));
         notifyListeners();
       }
     } catch (e) {
@@ -71,7 +90,7 @@ class ReviewProvider extends ChangeNotifier {
       final response = await http.get(
         uri,
         headers: {
-          'Authorization': 'Bearer ${AuthProvider.token!}',
+          'Authorization': AuthProvider.token!,
         },
       );
       if (response.statusCode == 200) {

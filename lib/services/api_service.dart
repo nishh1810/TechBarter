@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
 
   static String apiUrl = dotenv.env['API_URL'] ?? "";
+  static String sellerUrl = dotenv.env['SELLER_URL'] ?? "";
 
   static String getApiUrl() {
     return "$apiUrl/api";
@@ -39,5 +41,31 @@ class ApiService {
       print(e);
       return "https://picsum.photos/id/${Random().nextInt(500)}/3000/2000";
     }
+  }
+
+  static Future<bool> sendMessage(String name, String email, String message) async {
+    try {
+      final url = '$apiUrl/api/contacts';
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: json.encode({
+          'name': name,
+          'email': email,
+          'message': message,
+        })
+      );
+
+      if(response.statusCode == 200) {
+        return true;
+      }
+    } catch(e) {
+      print(e);
+    }
+    return false;
+
   }
 }

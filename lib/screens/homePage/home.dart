@@ -22,8 +22,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      curIndex: 0,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 64),
+        padding: const EdgeInsets.symmetric(horizontal: 64),
         child: Column(
           children: [
             Container(

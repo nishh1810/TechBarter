@@ -8,6 +8,7 @@ import 'package:tech_barter/components/custom_notification.dart';
 import 'package:tech_barter/models/Product.dart';
 import 'package:tech_barter/providers/cart_provider.dart';
 import 'package:tech_barter/providers/product_provider.dart';
+import 'package:tech_barter/providers/review_provider.dart';
 import 'package:tech_barter/providers/user_provider.dart';
 import 'package:tech_barter/utils/route_strings.dart';
 import 'package:tech_barter/utils/shared_preference_helper.dart';
@@ -22,15 +23,26 @@ class ProductCard extends StatelessWidget {
 
   _onCardClick(context) {
     Provider.of<ProductProvider>(context, listen: false).setSelectedProduct(product);
+    Provider.of<ReviewProvider>(context, listen: false).getReviews(product.id!);
     SPHelper.setData(SPHelper.KEY_SELECTED_PRODUCT, json.encode(product));
     GoRouter.of(context).go(RouteName.productPage);
   }
 
   _addToCartClick(context) {
-    String userId = Provider.of<UserProvider>(context, listen: false).user!.id!;
-    Provider.of<CartProvider>(context, listen: false).addToCart(product.id!, userId, 1);
+    try {
+      if(Provider.of<UserProvider>(context, listen: false).user == null) {
+        NotificationService.showFixedWidthSnackbar(context, "Please login to add to cart");
+        return;
+      }
 
-    NotificationService.showFixedWidthSnackbar(context, "Added to cart");
+      String userId = Provider.of<UserProvider>(context, listen: false).user!.id!;
+
+      Provider.of<CartProvider>(context, listen: false).addToCart(product.id!, userId, 1);
+
+      NotificationService.showFixedWidthSnackbar(context, "Added to cart");
+    } catch(e) {
+      print(e);
+    }
   }
 
   @override

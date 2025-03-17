@@ -12,11 +12,13 @@ import 'package:tech_barter/screens/cartPage/cart_page.dart';
 import 'package:tech_barter/screens/checkoutPage/checkout.dart';
 import 'package:tech_barter/screens/checkoutPage/checkout_done.dart';
 import 'package:tech_barter/screens/checkoutPage/checkout_process.dart';
+import 'package:tech_barter/screens/contact_page.dart';
 import 'package:tech_barter/screens/homePage/home.dart';
 import 'package:tech_barter/screens/login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tech_barter/screens/page_not_found.dart';
 import 'package:tech_barter/screens/productPage/product_page.dart';
+import 'package:tech_barter/screens/product_catalog_page.dart';
 import 'package:tech_barter/screens/profilePage/address_page.dart';
 import 'package:tech_barter/screens/profilePage/order_page.dart';
 import 'package:tech_barter/screens/profilePage/profile_page.dart';
@@ -60,13 +62,15 @@ class MyApp extends StatelessWidget {
         GoRoute(path: RouteName.signup, builder: (context, state) => SignUp()),
         GoRoute(path: RouteName.home, builder: (context, state) => Home()),
         GoRoute(path: RouteName.productPage, builder: (context, state) => ProductPage()),
+        GoRoute(path: RouteName.productCatalogPage, builder: (context, state) => ProductCatalogPage()),
         GoRoute(path: RouteName.cartPage, builder: (context, state) => CartPage()),
         GoRoute(path: RouteName.orderPage, builder: (context, state) => OrderPage()),
         GoRoute(path: RouteName.profilePage, builder: (context, state) => ProfilePage()),
         GoRoute(path: RouteName.addressPage, builder: (context, state) => AddressPage()),
         GoRoute(path: RouteName.checkoutPage, builder: (context, state) => CheckoutPage()),
         GoRoute(path: RouteName.checkoutProcessPage, builder: (context, state) => CheckoutProcess()),
-        GoRoute(path: RouteName.checkoutDonePage, builder: (context, state) => CheckoutDone())
+        GoRoute(path: RouteName.checkoutDonePage, builder: (context, state) => CheckoutDone()),
+        GoRoute(path: RouteName.contactPage, builder: (context, state) => ContactPage())
       ],
       errorBuilder: (context, state) => NotFoundPage(),
   );

@@ -73,7 +73,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: Column(
         children: [
-          CustomHeader(),
+          CustomHeader(curIndex: 6),
           Expanded(
             child: SingleChildScrollView(
               child: Row(

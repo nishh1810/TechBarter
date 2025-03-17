@@ -4,6 +4,7 @@ class Review {
   String? id;
   RefType? user;
   RefType? product;
+  String? username;
   String? comment;
   double? rating;
   String? timestamp;
@@ -12,6 +13,7 @@ class Review {
       {this.id,
         this.user,
         this.product,
+        this.username,
         this.comment,
         this.rating,
         this.timestamp});
@@ -21,6 +23,7 @@ class Review {
     user = json['user'] != null ? RefType.fromJson(json['user']) : null;
     product =
     json['product'] != null ? RefType.fromJson(json['product']) : null;
+    username = json['username'];
     comment = json['comment'];
     rating = json['rating'];
     timestamp = json['timestamp'];
@@ -35,6 +38,7 @@ class Review {
     if (product != null) {
       data['product'] = product!.toJson();
     }
+    data['username'] = username;
     data['comment'] = comment;
     data['rating'] = rating;
     data['timestamp'] = timestamp;
@@ -43,6 +47,6 @@ class Review {
 
   @override
   String toString() {
-    return 'Review{id: $id, user: $user, product: $product, comment: $comment, rating: $rating, timestamp: $timestamp}';
+    return 'Review{id: $id, user: $user, product: $product, username: $username, comment: $comment, rating: $rating, timestamp: $timestamp}';
   }
 }

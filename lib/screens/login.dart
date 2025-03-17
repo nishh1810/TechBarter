@@ -53,7 +53,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Column(
         children: [
-          CustomHeader(),
+          CustomHeader(curIndex: 7),
           Expanded(
             child: SingleChildScrollView(
               child: Row(

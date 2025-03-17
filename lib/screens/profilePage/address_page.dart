@@ -54,6 +54,7 @@ class _AddressPageState extends State<AddressPage> {
     _zipController.text = userProvider?.user?.address?.zipCode ?? "";
 
     return CustomScaffold(
+      curIndex: 5,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 64, vertical: 32),
         child: Row(

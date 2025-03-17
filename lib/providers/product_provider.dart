@@ -22,18 +22,32 @@ class ProductProvider extends ChangeNotifier {
   List<Product> _randomProducts = [];
   List<Product> get randomProducts => _randomProducts;
 
+  List<Product> _searchProducts = [];
+  List<Product> get searchProducts => _searchProducts;
+
   Product? _selectedProduct;
   Product? get getSelectedProduct => _selectedProduct;
   void setSelectedProduct(Product product) => _selectedProduct = product;
 
   ProductProvider() {
     loadProductProvider();
+    loadAllProducts();
   }
 
   void loadProductProvider() {
     SPHelper.getData(SPHelper.KEY_SELECTED_PRODUCT).then((value) {
       if(value != null) {
         _selectedProduct = Product.fromJson(json.decode(value));
+      }
+    });
+  }
+
+  Future<void> loadAllProducts() async {
+    SPHelper.getData(SPHelper.KEY_PRODUCTS).then((value) {
+      if(value != null) {
+        _searchProducts = (json.decode(value) as List<dynamic>)
+            .map((item) => Product.fromJson(item))
+            .toList();
       }
     });
   }
@@ -132,7 +146,33 @@ class ProductProvider extends ChangeNotifier {
             .toList();
         notifyListeners();
       } else {
-        throw Exception("Failed to load related products");
+        throw Exception("Failed to load recyclable products");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> getProducts() async {
+    try {
+      final url = '$apiUrl/products';
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if(response.statusCode == 200) {
+        final data = json.decode(response.body);
+        _searchProducts = (data as List<dynamic>)
+            .map((item) => Product.fromJson(item))
+            .toList();
+        SPHelper.setData(SPHelper.KEY_PRODUCTS, json.encode(_searchProducts));
+        notifyListeners();
+      } else {
+        throw Exception("Failed to load search products");
       }
     } catch (e) {
       print(e);

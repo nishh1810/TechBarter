@@ -3,49 +3,67 @@ import 'package:go_router/go_router.dart';
 import 'package:tech_barter/components/custom_button.dart';
 import 'package:tech_barter/utils/route_strings.dart';
 
-class CheckoutDone extends StatefulWidget {
+class CheckoutDone extends StatelessWidget {
   const CheckoutDone({super.key});
-
-  @override
-  State<CheckoutDone> createState() => _CheckoutDoneState();
-}
-
-class _CheckoutDoneState extends State<CheckoutDone> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.8,
-        child: Center(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.error_outline, color: Colors.red, size: 80),
-              SizedBox(height: 16),
-              Text(
-                "Completed",
-                style: Theme.of(context).textTheme.displayLarge,
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.green.shade100,
+                  shape: BoxShape.circle,
+                ),
+                padding: const EdgeInsets.all(24),
+                child: const Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.green,
+                  size: 80,
+                ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 32),
               Text(
-                "Thank you for order",
-                style: Theme.of(context).textTheme.displayMedium,
+                "Order Completed!",
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green.shade800,
+                ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 16),
+              Text(
+                "Thank you for your purchase",
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Your order has been successfully placed",
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
               SizedBox(
                 width: 200,
                 child: CustomBlueButton(
-                  label: "Order Page",
+                  label: "View Orders",
                   onPressed: () {
-                    GoRouter.of(context).pushReplacement(RouteName.home);
+                    GoRouter.of(context).pushReplacement(RouteName.orderPage);
                   },
                 ),
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  GoRouter.of(context).pushReplacement(RouteName.home);
+                },
+                child: const Text("Continue Shopping"),
               ),
             ],
           ),
@@ -53,17 +71,4 @@ class _CheckoutDoneState extends State<CheckoutDone> {
       ),
     );
   }
-
-  // void _completeOrder() async {
-  //   print("complete order called");
-  //   await AuthProvider().loadToken();
-  //
-  //   String? userId = Provider.of<UserProvider>(context, listen: false).user?.id;
-  //   print("user id: $userId");
-  //   if(userId != null) {
-  //     List<CartProduct> cartProducts = Provider.of<CartProvider>(context, listen: false).cartProducts;
-  //     await Provider.of<OrderProvider>(context, listen: false).createOrder(userId,cartProducts);
-  //     Provider.of<CartProvider>(context, listen: false).clearCart();
-  //   }
-  // }
 }

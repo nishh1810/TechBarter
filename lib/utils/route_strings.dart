@@ -4,6 +4,7 @@ class RouteName {
   static get signup => "/signup";
   static get home => "/home";
   static get productPage => "/product-page";
+  static get productCatalogPage => "/product-catalog";
   static get cartPage => "/cart";
   static get orderPage => "/orders";
   static get profilePage => "/profile";
@@ -11,4 +12,5 @@ class RouteName {
   static get checkoutPage => "/checkout";
   static get checkoutProcessPage => "/checkout/process";
   static get checkoutDonePage => "/checkout/done";
+  static get contactPage => "/contact-us";
 }

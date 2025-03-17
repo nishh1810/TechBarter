@@ -79,7 +79,7 @@ class _CartSummaryState extends State<CartSummary> {
             Center(
               child: TextButton(
                 onPressed: () {
-                  GoRouter.of(context).pop();
+                  GoRouter.of(context).go(RouteName.productCatalogPage);
                 },
                 child: Text(
                   "Continue Shopping",

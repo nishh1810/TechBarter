@@ -27,6 +27,8 @@ dependencies:
   flutter_stripe: ^11.4.0
   flutter_stripe_web: ^6.4.0
   web: ^1.0.0
+  flutter_rating_bar: ^4.0.1
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
