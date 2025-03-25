@@ -34,11 +34,14 @@ RUN flutter --version
 # Enable Flutter Web
 RUN flutter config --enable-web
 
-# Set working directory
+# Set working directory for the app
 WORKDIR /home/flutter/app
 
 # Copy project files (as non-root user)
-COPY --chown=flutter:flutter . .
+COPY --chown=flutter . .
+
+# Verify files were copied correctly
+RUN ls -la
 
 # Get dependencies
 RUN flutter pub get
