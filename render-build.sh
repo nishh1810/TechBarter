@@ -1,10 +1,19 @@
 #!/bin/bash
 set -o errexit
 
-# Create .env file from Render environment variables
-echo "API_URL=$API_URL" > .env
-echo "STRIPE_PUBLISHABLE_KEY=$STRIPE_PUBLISHABLE_KEY" >> .env
+# Install Flutter
+echo "=> Installing Flutter..."
+git clone https://github.com/flutter/flutter.git -b stable --depth 1
+export PATH="$PATH:`pwd`/flutter/bin"
 
-# Rest of your build script
+# Verify Flutter installation
+flutter --version
+
+# Install dependencies & build
+echo "=> Building Flutter web..."
 flutter pub get
-flutter build web --release
+flutter build web --release \
+  --dart-define=API_URL=$API_URL \
+  --dart-define=STRIPE_PUBLISHABLE_KEY=$STRIPE_PUBLISHABLE_KEY
+
+echo "=> Build complete!"
