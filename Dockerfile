@@ -2,11 +2,24 @@
 FROM debian:bullseye-slim AS build
 
 # Install necessary dependencies
-RUN apt-get update && apt-get install -y curl unzip git xz-utils ca-certificates
+RUN apt-get update && apt-get install -y \
+    curl \
+    unzip \
+    git \
+    xz-utils \
+    ca-certificates \
+    libglu1-mesa \
+    --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user
+RUN useradd -ms /bin/bash flutter
+USER flutter
+WORKDIR /home/flutter
 
 # Set Flutter version
 ARG FLUTTER_VERSION=3.27.3
-ENV FLUTTER_HOME=/flutter
+ENV FLUTTER_HOME=/home/flutter/flutter
 
 # Download and extract Flutter
 RUN curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz \
@@ -18,35 +31,26 @@ RUN curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/
 ENV PATH="$FLUTTER_HOME/bin:$PATH"
 RUN flutter --version
 
-# Fix git safe directory issue
-RUN git config --global --add safe.directory $FLUTTER_HOME
-
 # Enable Flutter Web
 RUN flutter config --enable-web
 
 # Set working directory
-WORKDIR /app
+WORKDIR /home/flutter/app
 
-# Copy project files
-COPY . .
-
-# Fix permission issues
-RUN chown -R root:root /app
+# Copy project files (as non-root user)
+COPY --chown=flutter:flutter . .
 
 # Get dependencies
-RUN flutter --version && flutter pub get
+RUN flutter pub get
 
 # Build the Flutter web app
 RUN flutter build web --release
-
-# Debug: List contents of build directory to check if index.html is present
-RUN ls -l /app/build/web/
 
 # Step 2: Use NGINX to serve the built app
 FROM nginx:alpine
 
 # Copy built web files from the build stage
-COPY --from=build /app/build/web/ /usr/share/nginx/html/
+COPY --from=build /home/flutter/app/build/web /usr/share/nginx/html
 COPY .env /usr/share/nginx/html/.env
 
 # Expose port 80
