@@ -1,19 +1,19 @@
-#!/bin/bash
-set -o errexit
+#!/usr/bin/env bash
+
+# Set Flutter version (modify as needed)
+FLUTTER_VERSION="3.27.3"
 
 # Install Flutter
-echo "=> Installing Flutter..."
-git clone https://github.com/flutter/flutter.git -b stable --depth 1
-export PATH="$PATH:`pwd`/flutter/bin"
+echo "Installing Flutter $FLUTTER_VERSION..."
+curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$FLUTTER_VERSION-stable.tar.xz
+tar xf flutter.tar.xz
+export PATH="$PWD/flutter/bin:$PATH"
 
-# Verify Flutter installation
-flutter --version
+# Enable Flutter web
+flutter config --enable-web
 
-# Install dependencies & build
-echo "=> Building Flutter web..."
+# Install dependencies
 flutter pub get
-flutter build web --release \
-  --dart-define=API_URL=$API_URL \
-  --dart-define=STRIPE_PUBLISHABLE_KEY=$STRIPE_PUBLISHABLE_KEY
 
-echo "=> Build complete!"
+# Build the Flutter web app
+flutter build web
