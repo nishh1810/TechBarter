@@ -1,4 +1,4 @@
-import 'package:tech_barter/models/Order.dart';
+import 'package:tech_barter/models/order.dart';
 import 'package:tech_barter/models/Product.dart';
 
 class OrderResponse {
