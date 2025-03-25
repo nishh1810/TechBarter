@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: Tech-Barter
-    runtime: node
-    buildCommand: ./render-build.sh
-    startCommand: serve -s build/web -l $PORT
-    env: node
