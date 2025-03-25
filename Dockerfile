@@ -40,8 +40,13 @@ WORKDIR /home/flutter/app
 # Copy project files (as non-root user)
 COPY --chown=flutter . .
 
-# Verify files were copied correctly
-RUN ls -la
+# Ensure the web/ directory exists (create if missing)
+RUN if [ ! -d "web/" ]; then \
+      flutter create --platforms web .; \
+    fi
+
+# Debug: Verify web/index.html exists
+RUN ls -la web/ || { echo "❌ web/ directory is missing!"; exit 1; }
 
 # Get dependencies
 RUN flutter pub get
