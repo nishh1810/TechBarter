@@ -37,7 +37,10 @@ RUN chown -R root:root /app
 RUN flutter --version && flutter pub get
 
 # Build the Flutter web app
-RUN flutter build web
+RUN flutter build web --release
+
+# Debug: List contents of build directory to check if index.html is present
+RUN ls -l /app/build/web/
 
 # Step 2: Use NGINX to serve the built app
 FROM nginx:alpine
