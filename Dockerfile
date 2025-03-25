@@ -52,7 +52,9 @@ RUN ls -la web/ || { echo "❌ web/ directory is missing!"; exit 1; }
 RUN flutter pub get
 
 # Build the Flutter web app
-RUN flutter build web --release
+RUN flutter build web --release \
+     --dart-define=API_URL=$API_URL \
+     --dart-define=STRIPE_PUBLISHABLE_KEY=$STRIPE_PUBLISHABLE_KEY
 
 # Step 2: Use NGINX to serve the built app
 FROM nginx:alpine

@@ -28,6 +28,7 @@ web/
 #.vscode/
 
 # Flutter/Dart/Pub related
+.env
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/

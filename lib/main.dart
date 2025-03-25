@@ -32,7 +32,6 @@ void main() async{
   await dotenv.load(fileName:"../.env");
 
   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;
-  print("STRIPE_PUBLISHABLE_KEY : ${dotenv.env['STRIPE_PUBLISHABLE_KEY']}");
   runApp(
     MultiProvider(
       providers: [
